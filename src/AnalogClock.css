@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.clock-border {
+  /* VVV px for fallback */
+  width: 70vh;
+  content: "";
+  aspect-ratio: 1 / 1;
+}
+
+.tick {
+    position: absolute;
+    height: 35vh;
+    /* border-color: green; */
+    width: 0.05em;
+    /* background-color: gray; */
+    transform-origin: bottom center;
+    border-color: green;
+    border-top: 0.5em solid;
+}
+
+.digit {
+    position: absolute;
+    height: 35vh;
+    /* border-color: green; */
+    width: 0.25em;
+    /* background-color: gray; */
+    transform-origin: bottom center;
+}
+
+@for $j from 1 to 12 {
+    div.digit:nth-of-type($j) {
+        transform: rotateZ(calc(30deg * ($j)));
+        /* background-color: blue; */
+    }
+}
+
+/* nth of is apparently stupid... */
+@for $i from 13 to 72 {
+    div.tick:nth-of-type($i) {
+        transform: rotateZ(calc(6deg * ($i - 13)));
+        /* background-color: blue; */
+    }
+}
+
+
+.test {
+    background-color: blue;
+}
