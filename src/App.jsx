@@ -7,7 +7,7 @@ import DigitalClock from "./DigitalClock";
 import AnalogClock from "./AnalogClock";
 import "./App.css";
 
-const OPEN_SETTINGS = true;
+const FORCE_OPEN_SETTINGS = false;
 const DEFAULT_MODE = "digital" // analogue
 const DIGITAL_DEFAULT = { 
   seconds: "show",
@@ -22,7 +22,9 @@ function App() {
   // const [[hour, minute, second], setTime] = useState(1);
   // epoch
   const [timeString, setTimeString] = useState("00:00:00");
+  const [timeStringFmt, setTimeStringFmt] = useState("");
   const [dateString, setDateString] = useState("Thursday Jan 1 1970");
+  const [dateStringFmt, setDateStringFmt] = useState("");
   const [settingsVisible, showSettings] = useState(false);
   const [isFullscreen, setFullscreenState] = useState(false);
   const [mainDisplay, setMainDisplay] = useState(DEFAULT_MODE);
@@ -81,17 +83,20 @@ function App() {
           dateStr += "MMM";
           break;
         default: // hide
+          dateStr += "";
           break;
       }
       dateStr += " ";
 
       // D, DD, DD/MM, MM/DD ; just don't mess it up forehead
-      dateStr += digitalSettings.date;
-      if (digitalSettings.date.includes('/')) {
-        dateStr += '/';
-      } else {
-        dateStr += " ";
-      }
+      if (digitalSettings.date != "hide") {
+        dateStr += digitalSettings.date;
+        if (digitalSettings.date.includes("/") && (digitalSettings.year != "hide")) {
+          dateStr += "/";
+        } else {
+          dateStr += " ";
+        }
+      } // if hide, append nothing
 
       switch (digitalSettings.year) {
         case "full":
@@ -109,8 +114,14 @@ function App() {
       dateStr = dateStr.trim();
       dateStr = dateStr.replace(/ +/g, ' ');
 
-      setTimeString(date.format(now, timeStr));
-      setDateString(date.format(now, dateStr));
+      if ((timeStringFmt != timeStr) || (dateStringFmt != dateStr)) {
+        console.log(`prev timeStr: ${timeStringFmt}, dateStr: ${dateStringFmt}`);
+        console.log(` new timeStr: ${timeStr}, dateStr: ${dateStr}`);
+      }
+      setTimeStringFmt(timeStr);
+      setTimeString(date.format(now, timeStringFmt));
+      setDateStringFmt(dateStr);
+      setDateString(date.format(now, dateStringFmt));
     }
   }
 
@@ -150,8 +161,8 @@ function App() {
           </div>
           <div id="header-mid">
             <SettingsText text="Digital" selected={mainDisplay == "digital"}></SettingsText>
-            <SettingsText text="Analogue" selected={mainDisplay == "analogue"}></SettingsText>
-            <SettingsText text="Calendar" selected={mainDisplay == "calendar"}></SettingsText>
+            {false && <SettingsText text="Analogue" selected={mainDisplay == "analogue"}></SettingsText> }
+            {false && <SettingsText text="Calendar" selected={mainDisplay == "calendar"}></SettingsText>}
           </div>
           <div id="header-rhs">
             <UIButton
@@ -177,7 +188,7 @@ function App() {
               imgDesc="options"
               onClick={settingButtonHandler}
             ></UIButton>
-            {(settingsVisible || OPEN_SETTINGS) && <SettingsBox digital={digitalSettings} mainHandler={mainHandler}></SettingsBox>}
+            {(settingsVisible || FORCE_OPEN_SETTINGS) && <SettingsBox digital={digitalSettings} mainHandler={mainHandler}></SettingsBox>}
           </div>
         </div>
       </div>
