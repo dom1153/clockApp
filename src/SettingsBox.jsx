@@ -23,10 +23,10 @@ const SHORTFULL_OPTS = [
   ["hide", "Hide"],
 ];
 const THEME_OPTS = [ 
-  ["sys", "System"],
-  ["light", "Light"],
+  // ["sys", "System"],
+  // ["light", "Light"],
   ["dark", "Dark"],
-  ["bing", "Bing Image"],
+  ["image", "Pexel Image"],
 ];
 let BLANK_OPTS = [["", "blank"]];
 
@@ -59,6 +59,7 @@ function SettingsBox({digital, mainHandler}) {
         <div className="">
             <SettingsGroup title="Month" options={SHORTFULL_OPTS} handler={handler} grp="month" settings={digital}></SettingsGroup>
             <SettingsGroup title="Year" options={SHORTFULL_OPTS} handler={handler} grp="year" settings={digital}></SettingsGroup>
+            <SettingsGroup title="Theme" options={THEME_OPTS} handler={handler} grp="theme" settings={digital}></SettingsGroup>
             {/* <SettingsGroup title="Image Description" options={BLANK_OPTS}></SettingsGroup>
             <SettingsGroup title="Image Effect" options={BLANK_OPTS}></SettingsGroup> */}
         </div>

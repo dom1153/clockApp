@@ -5,7 +5,10 @@ import SettingsBox from "./SettingsBox";
 import SettingsText from "./SettingsText";
 import DigitalClock from "./DigitalClock";
 import AnalogClock from "./AnalogClock";
+// VVV image api
+import { createClient } from 'pexels';
 import "./App.css";
+import PhotoCredit from "./photoCredit";
 
 const FORCE_OPEN_SETTINGS = false;
 const DEFAULT_MODE = "digital" // analogue
@@ -15,7 +18,8 @@ const DIGITAL_DEFAULT = {
   dayOfWeek: "full",
   date: "DD",
   month: "short",
-  year: "full"
+  year: "full",
+  theme: "dark"
 };
 
 function App() {
@@ -29,6 +33,12 @@ function App() {
   const [isFullscreen, setFullscreenState] = useState(false);
   const [mainDisplay, setMainDisplay] = useState(DEFAULT_MODE);
   const [digitalSettings, setDigitalSettings] = useState(DIGITAL_DEFAULT);
+  const [pexelPhoto, setPexelPhoto] = useState({
+    img_url: "https://images.pexels.com/photos/16814271/pexels-photo-16814271.jpeg", 
+    photographer_name: "Kubra K.", 
+    photographer_url: "https://www.pexels.com/@hkubrakisa"
+  });
+  const [bgStyle, setBgStyle] = useState({});
 
   function updateTime() {
     const now = new Date();
@@ -114,7 +124,7 @@ function App() {
       dateStr = dateStr.trim();
       dateStr = dateStr.replace(/ +/g, ' ');
 
-      if ((timeStringFmt != timeStr) || (dateStringFmt != dateStr)) {
+      if (0 && (timeStringFmt != timeStr) || (dateStringFmt != dateStr)) {
         console.log(`prev timeStr: ${timeStringFmt}, dateStr: ${dateStringFmt}`);
         console.log(` new timeStr: ${timeStr}, dateStr: ${dateStr}`);
       }
@@ -122,6 +132,7 @@ function App() {
       setTimeString(date.format(now, timeStringFmt));
       setDateStringFmt(dateStr);
       setDateString(date.format(now, dateStringFmt));
+
     }
   }
 
@@ -135,10 +146,38 @@ function App() {
     updateTime();
     let ticker = setInterval(() => updateTime());
     setFullscreenState(document.fullscreenElement);
+
     return () => {
       clearInterval(ticker);
     };
   });
+
+  useEffect(() => {
+    // console.log(digitalSettings.theme);
+    if (digitalSettings.theme == "image") {
+      setBgStyle(true);
+    } else {
+      setBgStyle(false);
+    }
+  }, [digitalSettings.theme]);
+
+  // onCreate
+  useEffect(() => {
+    if (0)
+    {
+      const client = createClient('');
+      client.photos.curated({ per_page: 1 }).then(res => {
+        let photo = res.photos[0];
+        console.log(photo);
+        setPexelPhoto({
+          img_url: photo.src.original, 
+          photographer_name: photo.photographer, 
+          photographer_url: photo.photographer_url
+        })
+        // https://images.pexels.com/photos/16814271/pexels-photo-16814271.jpeg
+      });
+    }
+  }, []);
 
   function settingButtonHandler() {
     showSettings(!settingsVisible);
@@ -154,7 +193,10 @@ function App() {
 
   return (
     <div className="App">
-      <div className="flex justify-center flex-col content-center h-screen w-screen bg-gray-500 text-white select-none">
+      <div className="absolute top-0 left-0 bg-center bg-cover w-screen h-screen -z-10 bg-gray-500 ">
+        <img className={`w-full h-full object-cover ${bgStyle ? "block" : "hidden"}`} src={pexelPhoto.img_url}/>
+      </div>
+      <div className="flex justify-center flex-col content-center h-screen w-screen text-white select-none">
         <div id="header" className="flex p-3 w-screen justify-between">
           <div id="header-lhs">
             <UIButton icon="/information_line.svg" imgDesc="about"></UIButton>
@@ -175,10 +217,11 @@ function App() {
         <div id="content" className="self-center mt-auto mb-auto">
           { (mainDisplay == "digital") && <DigitalClock timeString={timeString} dateString={dateString}></DigitalClock> }
           { (mainDisplay == "analogue") && <AnalogClock timeString={timeString} dateString={dateString}></AnalogClock> }
+          {/* <img src={pexelPhoto.img_url} /> */}
         </div>
         <div id="footer" className="flex p-3 w-screen justify-between content-center">
           <div id="footer-lhs" className="flex items-center">
-            <div className="">&lt;Image Description Here&gt;</div>
+            <div className="">{(pexelPhoto.img_url != "") && <PhotoCredit img_url={pexelPhoto.img_url} photographer_name={pexelPhoto.photographer_name} photographer_url={pexelPhoto.photographer_url}/>}</div>
           </div>
           <div id="footer-mid"></div>
           <div id="footer-rhs">
