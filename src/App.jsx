@@ -21,10 +21,12 @@ const DIGITAL_DEFAULT = {
   year: "full",
   theme: "dark"
 };
+const DEBUG_MESSAGES = 0;
+
+const PEXEL_KEY = '';
+const USE_PEXEL = 0;
 
 function App() {
-  // const [[hour, minute, second], setTime] = useState(1);
-  // epoch
   const [timeString, setTimeString] = useState("00:00:00");
   const [timeStringFmt, setTimeStringFmt] = useState("");
   const [dateString, setDateString] = useState("Thursday Jan 1 1970");
@@ -40,132 +42,149 @@ function App() {
   });
   const [bgStyle, setBgStyle] = useState({});
 
-  function updateTime() {
-    const now = new Date();
-    // TODO: (performance) read a global time string instead, and only update based on custom hook
-    if (mainDisplay === "digital")
-    {
-      // consider time zone support?
-      // meridiem (A)
-      let timeStr = "";
-      switch (digitalSettings.hours) {
-        case "military":
-          timeStr += "HH";
-          break;
-        default:
-          // meridiem , 12
-          timeStr += "hh";
-          break;
-      }
+  function updateTimeString() {
+    console.log("> in update time");
+    // consider time zone support?
+    // meridiem (A)
+    let timeStr = "";
+    switch (digitalSettings.hours) {
+      case "military":
+        timeStr += "HH";
+        break;
+      default:
+        // meridiem , 12
+        timeStr += "hh";
+        break;
+    }
 
-      timeStr += ":mm";
+    timeStr += ":mm";
 
-      switch (digitalSettings.seconds) {
-        case "show":
-          timeStr += ":ss";
-          break;
-        default:
-          break;
-      }
+    switch (digitalSettings.seconds) {
+      case "show":
+        timeStr += ":ss";
+        break;
+      default:
+        break;
+    }
 
-      if (digitalSettings.hours == "meridiem") {
-        timeStr += " A";
-      }
+    if (digitalSettings.hours == "meridiem") {
+      timeStr += " A";
+    }
+    setTimeStringFmt(timeStr);
 
-      let dateStr = "";
-      switch (digitalSettings.dayOfWeek) {
-        case "full":
-          dateStr += "dddd";
-          break;
-        case "short":
-          dateStr += "ddd";
-          break;
-        default: // hide
-          break;
-      }
-      dateStr += " ";
-
-      switch (digitalSettings.month) {
-        case "full":
-          dateStr += "MMMM";
-          break;
-        case "short":
-          dateStr += "MMM";
-          break;
-        default: // hide
-          dateStr += "";
-          break;
-      }
-      dateStr += " ";
-
-      // D, DD, DD/MM, MM/DD ; just don't mess it up forehead
-      if (digitalSettings.date != "hide") {
-        dateStr += digitalSettings.date;
-        if (digitalSettings.date.includes("/") && (digitalSettings.year != "hide")) {
-          dateStr += "/";
-        } else {
-          dateStr += " ";
-        }
-      } // if hide, append nothing
-
-      switch (digitalSettings.year) {
-        case "full":
-          dateStr += "YYYY";
-          break;
-        case "short":
-          dateStr += "YY";
-          break;
-        default: // hide
-          break;
-      }
-      dateStr += " ";
-
-      // lazy trim any extra whitespaces
-      dateStr = dateStr.trim();
-      dateStr = dateStr.replace(/ +/g, ' ');
-
-      if (0 && (timeStringFmt != timeStr) || (dateStringFmt != dateStr)) {
-        console.log(`prev timeStr: ${timeStringFmt}, dateStr: ${dateStringFmt}`);
-        console.log(` new timeStr: ${timeStr}, dateStr: ${dateStr}`);
-      }
-      setTimeStringFmt(timeStr);
-      setTimeString(date.format(now, timeStringFmt));
-      setDateStringFmt(dateStr);
-      setDateString(date.format(now, dateStringFmt));
-
+    if (DEBUG_MESSAGES && timeStringFmt != timeStr) {
+      console.log(`   prev timeStr: ${timeStringFmt}`);
+      console.log(`   new timeStr: ${timeStr}`);
     }
   }
 
-  function mainHandler(e, grp, i) {
-    let settings = digitalSettings;
-    settings[grp] = i;
-    setDigitalSettings(settings);
+  function updateDateString() {
+    console.log("> in update date");
+    let dateStr = "";
+    switch (digitalSettings.dayOfWeek) {
+      case "full":
+        dateStr += "dddd";
+        break;
+      case "short":
+        dateStr += "ddd";
+        break;
+      default: // hide
+        break;
+    }
+    dateStr += " ";
+
+    switch (digitalSettings.month) {
+      case "full":
+        dateStr += "MMMM";
+        break;
+      case "short":
+        dateStr += "MMM";
+        break;
+      default: // hide
+        dateStr += "";
+        break;
+    }
+    dateStr += " ";
+
+    // D, DD, DD/MM, MM/DD ; just don't mess it up forehead
+    if (digitalSettings.date != "hide") {
+      dateStr += digitalSettings.date;
+      if (
+        digitalSettings.date.includes("/") &&
+        digitalSettings.year != "hide"
+      ) {
+        dateStr += "/";
+      } else {
+        dateStr += " ";
+      }
+    } // if hide, append nothing
+
+    switch (digitalSettings.year) {
+      case "full":
+        dateStr += "YYYY";
+        break;
+      case "short":
+        dateStr += "YY";
+        break;
+      default: // hide
+        break;
+    }
+    dateStr += " ";
+
+    // lazy trim any extra whitespaces
+    dateStr = dateStr.trim();
+    dateStr = dateStr.replace(/ +/g, " ");
+    setDateStringFmt(dateStr);
+
+    if (DEBUG_MESSAGES && dateStringFmt != dateStr) {
+      console.log(`  prev dateStr: ${dateStringFmt}`);
+      console.log(`   new dateStr: ${dateStr}`);
+    }
   }
 
-  useEffect(() => {
-    updateTime();
-    let ticker = setInterval(() => updateTime());
-    setFullscreenState(document.fullscreenElement);
+  function updateTime() {
+    const now = new Date();
+    if (mainDisplay === "digital")
+    {
+      setTimeString(date.format(now, timeStringFmt));
+      setDateString(date.format(now, dateStringFmt));
+    }
+  }
 
-    return () => {
-      clearInterval(ticker);
-    };
-  });
+  function updateSettings() {
+    updateTimeString();
+    updateDateString();
 
-  useEffect(() => {
     // console.log(digitalSettings.theme);
     if (digitalSettings.theme == "image") {
       setBgStyle(true);
     } else {
       setBgStyle(false);
     }
-  }, [digitalSettings.theme]);
+  }
+
+  function settingsClickHandler(e, grp, i) {
+    let settings = digitalSettings;
+    settings[grp] = i;
+    setDigitalSettings(settings);
+    updateSettings();
+  }
+
+  useEffect(() => {
+    let ticker = setInterval(() => updateTime());
+
+    return () => {
+      clearInterval(ticker);
+    };
+  });
 
   // onCreate
+  // get's called twice...
   useEffect(() => {
-    if (0)
+    updateSettings();
+    if (USE_PEXEL)
     {
-      const client = createClient('');
+      const client = createClient(PEXEL_KEY);
       client.photos.curated({ per_page: 1 }).then(res => {
         let photo = res.photos[0];
         console.log(photo);
@@ -186,8 +205,10 @@ function App() {
   function toggleFullScreen() {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
+      setFullscreenState(true);
     } else if (document.exitFullscreen) {
       document.exitFullscreen();
+      setFullscreenState(false);
     }
   }
 
@@ -231,7 +252,7 @@ function App() {
               imgDesc="options"
               onClick={settingButtonHandler}
             ></UIButton>
-            {(settingsVisible || FORCE_OPEN_SETTINGS) && <SettingsBox digital={digitalSettings} mainHandler={mainHandler}></SettingsBox>}
+            {(settingsVisible || FORCE_OPEN_SETTINGS) && <SettingsBox digital={digitalSettings} mainHandler={settingsClickHandler}></SettingsBox>}
           </div>
         </div>
       </div>

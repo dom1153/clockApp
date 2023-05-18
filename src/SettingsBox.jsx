@@ -1,5 +1,5 @@
 import SettingsGroup from "./SettingsGroup";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const SECOND_OPTS = [ 
   ["show", "Show"],
@@ -40,17 +40,14 @@ function SettingsBox({digital, mainHandler}) {
   // and based on a selected state pass 
   // TODO: VVV render these as child elements instead, DOY?!
 
-  let blankOpts = [ {id: 1, name: "empty"} ]
-
   function handler(e, grp, i) {
     mainHandler(e, grp, i);
   }
 
   return (
-    <div className="backdrop-blur-md bg-green-700 p-5 rounded-lg absolute bottom-0 right-0 z-100 mb-16 mr-5 bg-opacity-80">
+    <div className="backdrop-blur-md bg-green-700 p-5 rounded-lg absolute bottom-0 right-0 z-100 mb-16 mr-5 bg-opacity-30">
       <div className="flex">
         <div className="mr-5">
-            {/* <SettingsGroup title="Theme" options={themeOpts}></SettingsGroup> */}
             <SettingsGroup title="Seconds" options={SECOND_OPTS} handler={handler} grp="seconds" settings={digital}></SettingsGroup>
             <SettingsGroup title="Hours" options={HOUR_OPTS} handler={handler} grp="hours" settings={digital}></SettingsGroup>
             <SettingsGroup title="Day" options={SHORTFULL_OPTS} handler={handler} grp="dayOfWeek" settings={digital}></SettingsGroup>
