@@ -1,10 +1,11 @@
 import { useState } from "react";
 import PhotoCredit from "./PhotoCredit"
 import UIButton from "./UiButton"
+import SettingsBox from "./SettingsBox";
 
 const FORCE_OPEN_SETTINGS = false;
 
-export default function Footer({pexelPhoto, settingsClickHandler}) {
+export default function Footer({digitalSettings, pexelPhoto, settingsClickHandler}) {
   const [settingsVisible, showSettings] = useState(false);
 
   function settingButtonHandler() {

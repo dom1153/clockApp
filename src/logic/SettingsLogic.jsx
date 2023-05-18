@@ -154,6 +154,7 @@ const SettingsLogic = () => {
     updateSettings,
     settingsClickHandler,
     updateTime,
+    digitalSettings,
     dateString,
     timeString,
     bgStyle,

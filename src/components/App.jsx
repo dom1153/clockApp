@@ -12,7 +12,7 @@ const USE_PEXEL = 0;
 function App() {
   const { 
     updateSettings, settingsClickHandler, updateTime, 
-    dateString, timeString, bgStyle, mainDisplay
+    digitalSettings, dateString, timeString, bgStyle, mainDisplay
   } = SettingsLogic();
   const { 
     getCuratedPexelPhoto, 
@@ -42,7 +42,7 @@ function App() {
           { (mainDisplay == "analogue") && <AnalogClock timeString={timeString} dateString={dateString}></AnalogClock> }
           {/* <img src={pexelPhoto.img_url} /> */}
         </div>
-        <Footer pexelPhoto={pexelPhoto} settingsClickHandler={settingsClickHandler} />
+        <Footer pexelPhoto={pexelPhoto} settingsClickHandler={settingsClickHandler} digitalSettings={digitalSettings}/>
       </div>
     </div>
   );

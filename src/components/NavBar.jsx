@@ -10,7 +10,7 @@ export default function NavBar({mainDisplay}) {
               <UIButton icon="/information_line.svg" imgDesc="about"/>
             </div>
             <div id="header-mid">
-              <SettingsText text="Digital" selected={mainDisplay == "digital"}/>
+              <SettingsText text="Digital" selected={mainDisplay == "digital"} />
               {false && <SettingsText text="Analogue" selected={mainDisplay == "analogue"}/> }
               {false && <SettingsText text="Calendar" selected={mainDisplay == "calendar"}/>}
             </div>
