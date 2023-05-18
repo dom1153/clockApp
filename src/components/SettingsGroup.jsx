@@ -1,6 +1,6 @@
 import SettingsText from "./SettingsText";
 
-function SettingsGroup({title, options, handler, settings, grp}) {
+export default function SettingsGroup({title, options, handler, settings, grp}) {
   function middleMan(e, i) {
     handler(e, grp, i);
   }
@@ -12,5 +12,3 @@ function SettingsGroup({title, options, handler, settings, grp}) {
     </div>
   );
 }
-
-export default SettingsGroup;

@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
+import "../css/App.css";
 import date from "date-and-time";
 import UIButton from "./UiButton";
 import SettingsBox from "./SettingsBox";
 import SettingsText from "./SettingsText";
 import DigitalClock from "./DigitalClock";
 import AnalogClock from "./AnalogClock";
-// VVV image api
-import { createClient } from 'pexels';
-import "./App.css";
-import PhotoCredit from "./photoCredit";
+import PhotoCredit from "./PhotoCredit";
+import { createClient } from 'pexels'; // image api
 
 const FORCE_OPEN_SETTINGS = false;
 const DEFAULT_MODE = "digital" // analogue
@@ -22,7 +21,6 @@ const DIGITAL_DEFAULT = {
   theme: "dark"
 };
 const DEBUG_MESSAGES = 0;
-
 const PEXEL_KEY = '';
 const USE_PEXEL = 0;
 

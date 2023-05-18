@@ -1,12 +1,11 @@
-import "./DigitalClock.css"
+import "../css/DigitalClock.css"
+import React from 'react'
 
-function DigitalClock({timeString, dateString}) {
+export default function DigitalClock({timeString, dateString}) {
   return (
     <div className="">
         <div className="clock-time text-center">{timeString}</div>
         <div className="clock-date text-center">{dateString}</div>
     </div>
-  );
+  )
 }
-
-export default DigitalClock;
