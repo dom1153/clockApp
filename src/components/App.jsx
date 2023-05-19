@@ -7,8 +7,6 @@ import Footer from "./Footer";
 import SettingsLogic from "../logic/SettingsLogic";
 import ApiLogic from "../logic/ApiLogic";
 
-const USE_PEXEL = 0;
-
 function App() {
   const { 
     updateSettings, settingsClickHandler, updateTime, 
@@ -27,7 +25,7 @@ function App() {
   // onCreate, is called twice...
   useEffect(() => {
     updateSettings();
-    if (USE_PEXEL) getCuratedPexelPhoto();
+    getCuratedPexelPhoto();
   }, []);
 
   return (
