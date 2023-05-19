@@ -2,6 +2,8 @@ import { useState } from "react";
 import PhotoCredit from "./PhotoCredit"
 import UIButton from "./UiButton"
 import SettingsBox from "./SettingsBox";
+import settingsImg from "../assets/more_2_fill.svg"
+import downloadImg from "../assets/download_2_line.svg"
 
 const FORCE_OPEN_SETTINGS = false;
 
@@ -22,9 +24,9 @@ export default function Footer({digitalSettings, pexelPhoto, settingsClickHandle
                 <></>
             </div>
             <div id="footer-rhs">
-                <UIButton icon="/download_2_line.svg" imgDesc="download"/>
+                {/* <UIButton icon="/download_2_line.svg" imgDesc="download"/> */}
                 <UIButton
-                    icon="/more_2_fill.svg"
+                    icon={settingsImg}
                     imgDesc="options"
                     onClick={settingButtonHandler}
                 />
