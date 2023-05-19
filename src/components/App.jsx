@@ -6,6 +6,8 @@ import NavBar from "./NavBar";
 import Footer from "./Footer";
 import SettingsLogic from "../logic/SettingsLogic";
 import ApiLogic from "../logic/ApiLogic";
+import BlackOverlay from "./BlackOverlay";
+import Modal from "./Modal";
 
 const USE_PEXEL = 0;
 
@@ -42,7 +44,7 @@ function App() {
           { (mainDisplay == "analogue") && <AnalogClock timeString={timeString} dateString={dateString}></AnalogClock> }
           {/* <img src={pexelPhoto.img_url} /> */}
         </div>
-        <Footer pexelPhoto={pexelPhoto} settingsClickHandler={settingsClickHandler} digitalSettings={digitalSettings}/>
+        <Footer pexelPhoto={pexelPhoto} settingsClickHandler={settingsClickHandler} digitalSettings={digitalSettings} bgStyle={bgStyle}/>
       </div>
     </div>
   );

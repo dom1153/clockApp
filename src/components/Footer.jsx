@@ -5,7 +5,7 @@ import SettingsBox from "./SettingsBox";
 
 const FORCE_OPEN_SETTINGS = false;
 
-export default function Footer({digitalSettings, pexelPhoto, settingsClickHandler}) {
+export default function Footer({digitalSettings, pexelPhoto, settingsClickHandler, bgStyle}) {
   const [settingsVisible, showSettings] = useState(false);
 
   function settingButtonHandler() {
@@ -16,7 +16,7 @@ export default function Footer({digitalSettings, pexelPhoto, settingsClickHandle
     <>
         <div id="footer" className="flex p-3 w-screen justify-between content-center">
             <div id="footer-lhs" className="flex items-center">
-                <div className="">{(pexelPhoto.img_url != "") && <PhotoCredit img_url={pexelPhoto.img_url} photographer_name={pexelPhoto.photographer_name} photographer_url={pexelPhoto.photographer_url}/>}</div>
+                <div className="">{((pexelPhoto.img_url != "") && bgStyle) && <PhotoCredit img_url={pexelPhoto.img_url} photographer_name={pexelPhoto.photographer_name} photographer_url={pexelPhoto.photographer_url}/>}</div>
             </div>
             <div id="footer-mid">
                 <></>

@@ -1,4 +1,5 @@
 import SettingsGroup from "./SettingsGroup";
+import AuthorSection from "./AuthorSection";
 import { useEffect } from "react";
 
 const SECOND_OPTS = [ 
@@ -45,20 +46,27 @@ function SettingsBox({digital, mainHandler}) {
   }
 
   return (
-    <div className="backdrop-blur-md bg-green-700 p-5 rounded-lg absolute bottom-0 right-0 z-100 mb-16 mr-5 bg-opacity-30">
-      <div className="flex">
-        <div className="mr-5">
-            <SettingsGroup title="Seconds" options={SECOND_OPTS} handler={handler} grp="seconds" settings={digital}></SettingsGroup>
-            <SettingsGroup title="Hours" options={HOUR_OPTS} handler={handler} grp="hours" settings={digital}></SettingsGroup>
-            <SettingsGroup title="Day" options={SHORTFULL_OPTS} handler={handler} grp="dayOfWeek" settings={digital}></SettingsGroup>
-            <SettingsGroup title="Date" options={DATE_OPTS} handler={handler} grp="date" settings={digital}></SettingsGroup>
+    <div className="backdrop-blur-md bg-green-700 rounded-t-lg absolute bottom-0 right-0 z-100 mb-16 mr-5 bg-opacity-70">
+      {/* author/settings split */}
+      <div className="flex flex-col">
+        {/* actual settings */}
+        <div className="flex flex-grow p-5 pb-2">
+          <div className="mr-5">
+              <SettingsGroup title="Seconds" options={SECOND_OPTS} handler={handler} grp="seconds" settings={digital}></SettingsGroup>
+              <SettingsGroup title="Hours" options={HOUR_OPTS} handler={handler} grp="hours" settings={digital}></SettingsGroup>
+              <SettingsGroup title="Day" options={SHORTFULL_OPTS} handler={handler} grp="dayOfWeek" settings={digital}></SettingsGroup>
+              <SettingsGroup title="Date" options={DATE_OPTS} handler={handler} grp="date" settings={digital}></SettingsGroup>
+          </div>
+          <div className="">
+              <SettingsGroup title="Month" options={SHORTFULL_OPTS} handler={handler} grp="month" settings={digital}></SettingsGroup>
+              <SettingsGroup title="Year" options={SHORTFULL_OPTS} handler={handler} grp="year" settings={digital}></SettingsGroup>
+              <SettingsGroup title="Theme" options={THEME_OPTS} handler={handler} grp="theme" settings={digital}></SettingsGroup>
+              {/* <SettingsGroup title="Image Description" options={BLANK_OPTS}></SettingsGroup>
+              <SettingsGroup title="Image Effect" options={BLANK_OPTS}></SettingsGroup> */}
+          </div>
         </div>
-        <div className="">
-            <SettingsGroup title="Month" options={SHORTFULL_OPTS} handler={handler} grp="month" settings={digital}></SettingsGroup>
-            <SettingsGroup title="Year" options={SHORTFULL_OPTS} handler={handler} grp="year" settings={digital}></SettingsGroup>
-            <SettingsGroup title="Theme" options={THEME_OPTS} handler={handler} grp="theme" settings={digital}></SettingsGroup>
-            {/* <SettingsGroup title="Image Description" options={BLANK_OPTS}></SettingsGroup>
-            <SettingsGroup title="Image Effect" options={BLANK_OPTS}></SettingsGroup> */}
+        <div className="bg-gray-800 pl-7 pr-5 h-12 rounded-b-lg bg-opacity-70 flex items-center">
+          <AuthorSection></AuthorSection>
         </div>
       </div>
     </div>
