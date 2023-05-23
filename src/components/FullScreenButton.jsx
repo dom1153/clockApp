@@ -8,7 +8,10 @@ export default function FullScreenButton() {
 
   function toggleFullScreen() {
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log(`Error attempting fullscreen mode: ${err.message} ${err.name}`);
+        setFullscreenState(false);
+      }) ;
       setFullscreenState(true);
     } else if (document.exitFullscreen) {
       document.exitFullscreen();

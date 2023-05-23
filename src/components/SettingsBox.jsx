@@ -33,8 +33,6 @@ let BLANK_OPTS = [["", "blank"]];
 
 function SettingsBox({digital, mainHandler}) {
   useEffect(() => {
-    // something something reducer
-    // update settings based on params
   });
 
   // so we have an array of options, and we want one to have a 'selected' state
@@ -45,12 +43,14 @@ function SettingsBox({digital, mainHandler}) {
     mainHandler(e, grp, i);
   }
 
+  // add inert when hidden?
+
   return (
-    <div className="backdrop-blur-md bg-green-700 rounded-t-lg absolute bottom-0 right-0 z-100 mb-16 mr-5 bg-opacity-70">
+    <div className="flex flex-col backdrop-blur-md bg-green-700 rounded-t-lg absolute bottom-0 right-0 z-100 mb-16 mr-5 bg-opacity-70 max-h-[calc(100vh-(64px*2))] overflow-auto">
       {/* author/settings split */}
       <div className="flex flex-col">
         {/* actual settings */}
-        <div className="flex flex-grow p-5 pb-2">
+        <div className="flex flex-grow p-5 pb-2 md:flex-row flex-col overflow-auto">
           <div className="mr-5">
               <SettingsGroup title="Seconds" options={SECOND_OPTS} handler={handler} grp="seconds" settings={digital}></SettingsGroup>
               <SettingsGroup title="Hours" options={HOUR_OPTS} handler={handler} grp="hours" settings={digital}></SettingsGroup>

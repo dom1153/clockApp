@@ -30,7 +30,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="absolute top-0 left-0 bg-center bg-cover w-screen h-screen -z-10 bg-gray-500 ">
+      <div className="absolute top-0 left-0 bg-center bg-cover w-screen h-screen -z-10 bg-gray-500">
         <img className={`w-full h-full object-cover ${bgStyle ? "block" : "hidden"}`} src={pexelPhoto.img_url}/>
       </div>
       <div className="flex justify-center flex-col content-center h-screen w-screen text-white select-none">

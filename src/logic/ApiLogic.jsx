@@ -12,12 +12,12 @@ const ApiLogic = () => {
     });
 
     function getCuratedPexelPhoto() {
-        if (USE_PEXEL) 
+        if (USE_PEXEL && import.meta.env.PROD)
         {
             const client = createClient(PEXEL_KEY);
             client.photos.curated({ per_page: 1 }).then(res => {
                 let photo = res.photos[0];
-                console.log(photo);
+                // console.log(photo);
                 setPexelPhoto({
                 img_url: photo.src.original, 
                 photographer_name: photo.photographer, 

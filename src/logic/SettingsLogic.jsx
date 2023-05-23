@@ -13,6 +13,19 @@ const DIGITAL_DEFAULT = {
   theme: "dark"
 };
 
+const USE_DATE_OVERRIDE = 0;
+const USE_TIME_OVERRIDE = 0;
+const DATE_OVERRIDE = {
+  year: 1970,
+  month: 0,
+  date: 1
+};
+const TIME_OVERRIDE = {
+  hour: 9,
+  minute: 27,
+  second: 37
+};
+
 const SettingsLogic = () => {
   const [mainDisplay, setMainDisplay] = useState(DEFAULT_MODE);
   const [timeString, setTimeString] = useState("00:00:00");
@@ -31,8 +44,11 @@ const SettingsLogic = () => {
       case "military":
         timeStr += "HH";
         break;
+      case "sanmeridiem":
+        timeStr += "h";
+        break;
       default:
-        // meridiem , 12
+        // meridiem
         timeStr += "hh";
         break;
     }
@@ -124,6 +140,21 @@ const SettingsLogic = () => {
 
   function updateTime() {
     const now = new Date();
+    if (USE_TIME_OVERRIDE) {
+      let {hour, minute, second} = TIME_OVERRIDE;
+      // console.log("hms",hour,minute,second);
+      now.setHours(hour);
+      now.setMinutes(minute);
+      now.setSeconds(second);
+    }
+    if (USE_DATE_OVERRIDE) {
+      let {year, month, date} = DATE_OVERRIDE;
+      console.log("ymd",year,month,date);
+      now.setFullYear(year);
+      now.setMonth(month);
+      now.setDate(date);
+    }
+
     if (mainDisplay === "digital")
     {
       setTimeString(date.format(now, timeStringFmt));
