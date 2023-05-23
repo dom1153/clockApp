@@ -44,12 +44,11 @@ const SettingsLogic = () => {
       case "military":
         timeStr += "HH";
         break;
-      case "sanmeridiem":
-        timeStr += "h";
         break;
+      case "sanmeridiem":
       default:
         // meridiem
-        timeStr += "hh";
+        timeStr += "h";
         break;
     }
 
@@ -162,16 +161,30 @@ const SettingsLogic = () => {
     }
   }
 
+  function applyTheme() {
+    // console.log(digitalSettings.theme);
+    setBgStyle(false);
+    switch(digitalSettings.theme) {
+      case "image":
+        setBgStyle(true);
+        document.getElementById("root").classList.add("dark");
+        break;
+      case "light":
+        document.getElementById("root").classList.remove("dark");
+        break;
+      case "dark":
+        document.getElementById("root").classList.add("dark");
+        break;
+      default:
+        break;
+    }
+  }
+
   function updateSettings() {
     updateTimeString();
     updateDateString();
-
-    // console.log(digitalSettings.theme);
-    if (digitalSettings.theme == "image") {
-      setBgStyle(true);
-    } else {
-      setBgStyle(false);
-    }
+    applyTheme();
+    // window.matchMedia('(prefers-color-scheme: dark)').matches
   }
 
   function settingsClickHandler(e, grp, i) {

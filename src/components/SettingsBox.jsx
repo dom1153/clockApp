@@ -25,7 +25,7 @@ const SHORTFULL_OPTS = [
 ];
 const THEME_OPTS = [ 
   // ["sys", "System"],
-  // ["light", "Light"],
+  ["light", "Light"],
   ["dark", "Dark"],
   ["image", "Pexel Image"],
 ];
@@ -46,7 +46,7 @@ function SettingsBox({digital, mainHandler}) {
   // add inert when hidden?
 
   return (
-    <div className="flex flex-col backdrop-blur-md bg-green-700 rounded-t-lg absolute bottom-0 right-0 z-100 mb-16 mr-5 bg-opacity-70 max-h-[calc(100vh-(64px*2))] overflow-auto">
+    <div className="flex flex-col backdrop-blur-md bg-gray-200 dark:bg-green-700 rounded-t-lg absolute bottom-0 right-0 z-100 mb-16 mr-5 bg-opacity-70 max-h-[calc(100vh-(64px*2))] overflow-auto">
       {/* author/settings split */}
       <div className="flex flex-col">
         {/* actual settings */}
@@ -65,7 +65,7 @@ function SettingsBox({digital, mainHandler}) {
               <SettingsGroup title="Image Effect" options={BLANK_OPTS}></SettingsGroup> */}
           </div>
         </div>
-        <div className="bg-gray-800 pl-7 pr-5 h-12 rounded-b-lg bg-opacity-70 flex items-center">
+        <div className="dark:bg-gray-800 bg-gray-300 pl-7 pr-5 h-12 rounded-b-lg bg-opacity-70 flex items-center">
           <AuthorSection></AuthorSection>
         </div>
       </div>
